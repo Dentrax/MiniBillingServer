@@ -16,7 +16,10 @@ namespace MiniBillingServer
         static void Main(string[] args)
         {
             Console.Title = "MiniBillingServer";
-            Console.WriteLine("Visit https://github.com/florian0/MiniBillingServer more information and updates");
+
+            Console.WriteLine("Visit: https://github.com/florian0/MiniBillingServer");
+            Console.WriteLine("for more information and updates");
+
             err = CheckConfig();
             if (err != null)
             {
