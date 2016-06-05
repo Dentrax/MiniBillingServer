@@ -56,9 +56,7 @@
     <Compile Include="Model\SilkDB.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Settings\config.ini.dist">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
