@@ -25,6 +25,13 @@ namespace MiniBillingServer.IO
         public List<string> Allowed_Hosts { get; set; }
         public List<string> Allowed_IPs { get; set; }
         #endregion
+
+        public Be_Config()
+        {
+            Allowed_Hosts = new List<string>();
+            Allowed_IPs = new List<string>();
+        }
+
     }
 
     public class Dal_Config
@@ -85,32 +92,16 @@ namespace MiniBillingServer.IO
 
                 #region security
                 #region Allowed Hosts
-                string tmp_AllowedHosts = IniReadValue("SECURITY", "Allowed_Hosts");
-                string[] AllowedHosts = tmp_AllowedHosts.Split(',');
-                List<string> tmp_AllowedHostList = new List<string>();
-                foreach (string Host in AllowedHosts)
-                {
-                    if (Host != null && Host != string.Empty)
-                    {
-                        tmp_AllowedHostList.Add(Host);
-                    }
-                }
-                Be_Config.Allowed_Hosts = tmp_AllowedHostList;
+                string[] AllowedHosts = IniReadValue("SECURITY", "Allowed_Hosts").Split(',');
+                
+                Be_Config.Allowed_Hosts.AddRange(AllowedHosts);
                 #endregion
 
                 #region Allowed IPs
-                string tmp_AllowedIPs = IniReadValue("SECURITY", "Allowed_IPs");
-                string[] AllowedIPs = tmp_AllowedIPs.Split(',');
-                List<string> tmp_AllowedIPsList = new List<string>();
-                foreach (string IP in AllowedIPs)
-                {
-                    if (IP != null && IP != string.Empty)
-                    {
-                        tmp_AllowedIPsList.Add(IP);
-                        
-                    }
-                }
-                Be_Config.Allowed_IPs = tmp_AllowedIPsList;
+                
+                string[] AllowedIPs = IniReadValue("SECURITY", "Allowed_IPs").Split(',');
+
+                Be_Config.Allowed_IPs.AddRange(AllowedIPs);
                 #endregion
                 #endregion
 
