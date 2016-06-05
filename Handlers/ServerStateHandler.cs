@@ -9,8 +9,7 @@ namespace MiniBillingServer.Handlers
 {
     class ServerStateHandler : Http.IHttpHandler
     {
-
-        public bool Handle(HttpListenerContext context)
+        public override bool Handle(HttpListenerContext context)
         {
             #region SecurityCheck
             string clientIP = context.Request.RemoteEndPoint.ToString();

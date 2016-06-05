@@ -28,7 +28,7 @@ namespace MiniBillingServer.Handlers
             return sb.ToString();
         }
 
-        public bool Handle(HttpListenerContext context)
+        public override bool Handle(HttpListenerContext context)
         {
             #region SecurityCheck
             string clientIP = context.Request.RemoteEndPoint.ToString();
@@ -74,17 +74,5 @@ namespace MiniBillingServer.Handlers
             return true;
         }
 
-        public void SendResult(HttpListenerResponse response, string responseString)
-        {
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-
-            response.ContentLength64 = buffer.Length;
-
-            System.IO.Stream output = response.OutputStream;
-
-            output.Write(buffer, 0, buffer.Length);
-
-            output.Close();
-        }
     }
 }
