@@ -18,8 +18,6 @@ It works for basic silk transactions. I don't know which features are required t
 
 Each URL should be handled in its own Handler, derived from `IHttpHandler`. Try to keep the code clean by placing database-related stuff into the `SilkDB.cs`.
 
-Whats missing is an Host/IP-based filter to prevent everyone from accessing the server.
-
 
 ## License
 
