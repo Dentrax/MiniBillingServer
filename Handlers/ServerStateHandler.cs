@@ -31,19 +31,7 @@ namespace MiniBillingServer.Handlers
             }
 
             // Build response
-            HttpListenerResponse response = context.Response;
-
-            string responseString = "1";
-
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-            
-            response.ContentLength64 = buffer.Length;
-
-            System.IO.Stream output = response.OutputStream;
-            
-            output.Write(buffer, 0, buffer.Length);
-            
-            output.Close();
+            SendResult(context.Response, "1");
 
             return true;
         }
