@@ -95,6 +95,9 @@ namespace MiniBillingServer.IO
                 string[] AllowedHosts = IniReadValue("SECURITY", "Allowed_Hosts").Split(',');
                 
                 Be_Config.Allowed_Hosts.AddRange(AllowedHosts);
+                
+                // Remove invalid entries (null, empty and space-only)
+                Be_Config.Allowed_Hosts.RemoveAll(x => x == null || x == string.Empty || x == " ");
                 #endregion
 
                 #region Allowed IPs
@@ -102,6 +105,9 @@ namespace MiniBillingServer.IO
                 string[] AllowedIPs = IniReadValue("SECURITY", "Allowed_IPs").Split(',');
 
                 Be_Config.Allowed_IPs.AddRange(AllowedIPs);
+
+                // Remove invalid entries (null, empty and space-only)
+                Be_Config.Allowed_IPs.RemoveAll(x => x == null || x == string.Empty || x == " ");
                 #endregion
                 #endregion
 
