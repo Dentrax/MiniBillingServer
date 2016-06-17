@@ -30,7 +30,7 @@ namespace MiniBillingServer
                 server.Handlers.Add(new Handlers.ServerStateHandler());
                 server.Handlers.Add(new Handlers.SilkDataCallHandler());
 
-                //Model.SilkDB.Instance.Init();
+                Model.SilkDB.Instance.Init();
 
                 server.Start();
 
