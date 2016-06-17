@@ -48,6 +48,10 @@
   <ItemGroup>
     <Compile Include="Handlers\SilkDataCallHandler.cs" />
     <Compile Include="Handlers\ServerStateHandler.cs" />
+    <Compile Include="Http\AccessDeniedException.cs" />
+    <Compile Include="Http\FilteredHttpHandler.cs" />
+    <Compile Include="Http\HandleResult.cs" />
+    <Compile Include="Http\HttpException.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="IO\Config.cs" />
