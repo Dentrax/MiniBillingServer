@@ -16,12 +16,12 @@ namespace MiniBillingServer.Handlers
             try { clientIP = clientIP.Substring(0, clientIP.IndexOf(":")); } catch { }
 
             List<string> HostIP = new List<string>();
-            foreach (string AuthorizedHost in IO.Config.cfg.Allowed_Hosts)
+            foreach (string AuthorizedHost in this.m_securityConfig.Allowed_Hosts)
             {
                 HostIP.Add(Dns.GetHostAddresses(AuthorizedHost)[0].ToString());
             }
 
-            if (IO.Config.cfg.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP)) { } else { return false; }
+            if (this.m_securityConfig.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP)) { } else { return false; }
 
             #endregion
             // Validate Handler

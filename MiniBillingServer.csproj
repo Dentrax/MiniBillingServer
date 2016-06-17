@@ -50,7 +50,10 @@
     <Compile Include="Handlers\ServerStateHandler.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
-    <Compile Include="IO\Config.cs" />
+    <Compile Include="Model\BindingConfiguration.cs" />
+    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\DatabaseConfiguration.cs" />
+    <Compile Include="Model\SecurityConfiguration.cs" />
     <Compile Include="Model\SilkData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SilkDB.cs" />
