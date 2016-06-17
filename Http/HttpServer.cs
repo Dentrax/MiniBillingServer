@@ -61,7 +61,8 @@ namespace MiniBillingServer.Http
                 {
                     // Access Denied
                     // Send Status 403
-                    Console.WriteLine("Access denied!");
+                    Console.WriteLine("[Access-denied] {0} from {1}", ex.Context.Request.Url.ToString(), ex.Context.Request.RemoteEndPoint.ToString());
+                    
 
                     string responseString = "<HTML><BODY>Access denied</BODY></HTML>";
                     byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
