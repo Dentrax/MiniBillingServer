@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Security.Cryptography;
-
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MiniBillingServer.Handlers
 {
-    class SilkDataCallHandler : Http.IHttpHandler
+    class SilkDataCallHandler : Http.FilteredHttpHandler
     {
         private MD5 md5 = MD5.Create();
 
@@ -30,6 +27,7 @@ namespace MiniBillingServer.Handlers
 
         public override bool Handle(HttpListenerContext context)
         {
+<<<<<<< HEAD
             #region SecurityCheck
             IPAddress clientIP = context.Request.RemoteEndPoint.Address;
 
@@ -42,11 +40,16 @@ namespace MiniBillingServer.Handlers
             if (this.m_securityConfig.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP.ToString())) { } else { return false; }
 
             #endregion
+=======
+>>>>>>> new_access_filter
             // Validate Handler
             if (context.Request.Url.LocalPath.ToLower() != "/billing_silkdatacall.asp")
             {
                 return false;
             }
+
+            // Security check
+            base.Handle(context);
 
             int UserJID = 0;
 

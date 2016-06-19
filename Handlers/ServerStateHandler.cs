@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using System.Net;
+using MiniBillingServer.Http;
 
 namespace MiniBillingServer.Handlers
 {
-    class ServerStateHandler : Http.IHttpHandler
+    class ServerStateHandler : FilteredHttpHandler
     {
         public override bool Handle(HttpListenerContext context)
         {
+<<<<<<< HEAD
             #region SecurityCheck
             IPAddress clientIP = context.Request.RemoteEndPoint.Address;
 
@@ -23,11 +21,17 @@ namespace MiniBillingServer.Handlers
             if (this.m_securityConfig.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP.ToString())) { } else { return false; }
 
             #endregion
+=======
+>>>>>>> new_access_filter
             // Validate Handler
             if (context.Request.Url.LocalPath.ToLower() != "/billing_serverstate.asp")
             {
                 return false;
             }
+
+            // Security check
+            base.Handle(context);
+            
 
             // Build response
             SendResult(context.Response, "1");
