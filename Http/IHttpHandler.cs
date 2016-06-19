@@ -3,14 +3,7 @@ namespace MiniBillingServer.Http
 {
     abstract class IHttpHandler
     {
-        protected Model.SecurityConfiguration m_securityConfig;
-
         public abstract bool Handle(System.Net.HttpListenerContext context);
-
-        public IHttpHandler()
-        {
-            m_securityConfig = new Model.SecurityConfiguration("Settings/config.ini");
-        }
 
         protected void SendResult(System.Net.HttpListenerResponse response, string responseString)
         {
