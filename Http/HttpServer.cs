@@ -46,14 +46,39 @@ namespace MiniBillingServer.Http
                 Console.WriteLine("> {0}", context.Request.Url.ToString());
 
                 bool handled = false;
-
-                foreach (IHttpHandler handler in server.Handlers)
+                try
                 {
-                    if (handler.Handle(context))
+                    foreach (IHttpHandler handler in server.Handlers)
                     {
-                        handled = true;
-                        break;
+                        if (handler.Handle(context))
+                        {
+                            handled = true;
+                            break;
+                        }
                     }
+                }
+                catch (AccessDeniedException ex)
+                {
+                    // Access Denied
+                    // Send Status 403
+                    Console.WriteLine("[Access-denied] {0} from {1}", ex.Context.Request.Url.ToString(), ex.Context.Request.RemoteEndPoint.ToString());
+                    
+
+                    string responseString = "<HTML><BODY>Access denied</BODY></HTML>";
+                    byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+
+
+                    HttpListenerResponse response = context.Response;
+
+                    // Get a response stream and write the response to it.
+                    response.ContentLength64 = buffer.Length;
+                    response.StatusCode = 403;
+                    response.StatusDescription = "Access denied";
+                    System.IO.Stream output = response.OutputStream;
+                    output.Write(buffer, 0, buffer.Length);
+                    // You must close the output stream.
+                    output.Close();
+                    continue;
                 }
 
                 // Check is the request was handled

@@ -56,9 +56,10 @@ namespace MiniBillingServer.Model
 
         private SilkDB()
         {
-            string connetionString = null;
-            connetionString = "Data Source=" + IO.Config.cfg.HOST_DB + ";Initial Catalog=" + IO.Config.cfg.ACC_DB + ";User ID=" + IO.Config.cfg.USER_DB + ";Password=" + IO.Config.cfg.PW_DB;
-            cnn = new SqlConnection(connetionString);
+            DatabaseConfiguration dbcfg = new DatabaseConfiguration("Settings/config.ini");
+            
+            string connectionString = "Data Source=" + dbcfg.Host + ";Initial Catalog=" + dbcfg.Database + ";User ID=" + dbcfg.Username + ";Password=" + dbcfg.Password;
+            cnn = new SqlConnection(connectionString);
 
             try { 
                 cnn.Open();
