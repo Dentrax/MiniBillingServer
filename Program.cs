@@ -1,59 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
-
-using System.Net;
-using MiniBillingServer.IO;
 using System.IO;
 
 namespace MiniBillingServer
 {
     class Program
     {
-        static string err = null;
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             Console.Title = "MiniBillingServer";
 
             Console.WriteLine("Visit: https://github.com/florian0/MiniBillingServer");
             Console.WriteLine("for more information and updates");
 
-            err = CheckConfig();
-            if (err != null)
+            try
             {
-                Console.WriteLine("##################  ERROR #####################");
+                Http.HttpServer server = new Http.HttpServer();
+
+                Model.BindingConfiguration bindcfg = new Model.BindingConfiguration("Settings/config.ini");
+
                 Console.WriteLine("");
-                Console.WriteLine(err);
+                Console.WriteLine("You should set billing server address to this one: ");
                 Console.WriteLine("");
-                Console.WriteLine("##################  ERROR #####################");
+                Console.WriteLine("http://" + bindcfg.Address + ":" + bindcfg.Port + @"/");
+                Console.WriteLine("");
+                Console.WriteLine("-------------------------------------------------------------------");
+
+                server.Prefixes.Add("http://" + bindcfg.Address + ":" + bindcfg.Port + "/");
+
+                server.Handlers.Add(new Handlers.ServerStateHandler());
+                server.Handlers.Add(new Handlers.SilkDataCallHandler());
+
+                Model.SilkDB.Instance.Init();
+
+                server.Start();
+
             }
-            else
+            catch (FileNotFoundException ex)
             {
-                StartBillingServer();
-            }             
+                Console.WriteLine("[Exception] {0}", ex.Message);
+                Console.WriteLine(CheckConfigIssue());
+                Console.Read();
+                return -1;
+            }
+
             Console.Read();
+
+            return 0;
         }
 
-        static void StartBillingServer()
-        {
-            Be_Config _Config = Config.cfg;
-            Http.HttpServer server = new Http.HttpServer();
-            Console.WriteLine("");
-            Console.WriteLine("You should set billing server address to this one: ");
-            Console.WriteLine("");
-            Console.WriteLine("http://" + _Config.Listen_Address + ":" + _Config.Listen_Port + @"/");
-            Console.WriteLine("");
-            Console.WriteLine("-------------------------------------------------------------------");
-            server.Prefixes.Add("http://" + _Config.Listen_Address + ":" + _Config.Listen_Port + "/");
-            server.Handlers.Add(new Handlers.ServerStateHandler());
-            server.Handlers.Add(new Handlers.SilkDataCallHandler());
-            Model.SilkDB.Instance.Init();
-            server.Start();
-        }
-        
-        static string CheckConfig()
+        static string CheckConfigIssue()
         {
             if (!Directory.Exists("Settings"))
             {
