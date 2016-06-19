@@ -31,8 +31,7 @@ namespace MiniBillingServer.Handlers
         public override bool Handle(HttpListenerContext context)
         {
             #region SecurityCheck
-            string clientIP = context.Request.RemoteEndPoint.ToString();
-            try { clientIP = clientIP.Substring(0, clientIP.IndexOf(":")); } catch { }
+            IPAddress clientIP = context.Request.RemoteEndPoint.Address;
 
             List<string> HostIP = new List<string>();
             foreach (string AuthorizedHost in this.m_securityConfig.Allowed_Hosts)
@@ -40,7 +39,7 @@ namespace MiniBillingServer.Handlers
                 HostIP.Add(Dns.GetHostAddresses(AuthorizedHost)[0].ToString());
             }
 
-            if (this.m_securityConfig.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP)) { } else { return false; }
+            if (this.m_securityConfig.Allowed_IPs.Contains(clientIP) || HostIP.Contains(clientIP.ToString())) { } else { return false; }
 
             #endregion
             // Validate Handler

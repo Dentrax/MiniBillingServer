@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
 
 namespace MiniBillingServer.Model
 {
@@ -19,7 +20,7 @@ namespace MiniBillingServer.Model
         /// <summary>
         /// A list of all allowed ips
         /// </summary>
-        public List<string> Allowed_IPs
+        public List<IPAddress> Allowed_IPs
         {
             get;
             protected set;
@@ -39,9 +40,20 @@ namespace MiniBillingServer.Model
             Allowed_Hosts.AddRange(tmp_AllowedHosts);
 
             // Read allowed ips
-            string[] AllowedIPs = IniReadValue("SECURITY", "Allowed_IPs").Split(',');
-            Allowed_IPs = new List<string>();
-            Allowed_IPs.AddRange(AllowedIPs);
+            string[] tmp_AllowedIPs = IniReadValue("SECURITY", "Allowed_IPs").Split(',');
+            Allowed_IPs = new List<IPAddress>();
+            foreach (string address in tmp_AllowedIPs)
+            {
+                try
+                {
+                    Allowed_IPs.Add(IPAddress.Parse(address));
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("[Config Parse Error] {0} (\"{1}\")", ex.Message, address);
+                }
+            }
+
         }
     }
 }
